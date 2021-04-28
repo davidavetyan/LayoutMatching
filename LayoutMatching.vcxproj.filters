@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Graph">
+      <UniqueIdentifier>{ff489b8d-b6ba-4620-9483-2df686c99f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{2531dab1-47df-4d2f-a7d1-7e9b06db76dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layout">
+      <UniqueIdentifier>{46e3cec8-e550-4c6a-a217-550ab80ca5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layout\Impl">
+      <UniqueIdentifier>{0379df31-0aad-4e80-91ee-f94af055861e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graph\Impl">
+      <UniqueIdentifier>{b82e3ee3-0caf-4b1f-8952-c3aa4d444e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphView">
+      <UniqueIdentifier>{6ca6ad98-e836-453a-a725-76a858bde366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphView\Impl">
+      <UniqueIdentifier>{fe75eb21-5d39-4d77-981d-06c37a1aaaf7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="LayoutMatching.cpp">
+      <Filter>Layout\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="graph.cpp">
+      <Filter>Graph\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="algoritms.cpp">
+      <Filter>Graph\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="mgraphview.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="mscene.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="graphwindow.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="edge.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="helpbrowser.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="LayoutMatching.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="graphwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="LayoutMatching.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="LayoutMatching.h">
+      <Filter>Layout</Filter>
+    </QtMoc>
+    <QtMoc Include="graphwindow.h">
+      <Filter>GraphView</Filter>
+    </QtMoc>
+    <QtMoc Include="helpbrowser.h">
+      <Filter>GraphView</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="graph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="algorithms.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="mgraphview.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="mscene.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="edge.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
