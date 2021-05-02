@@ -17,100 +17,63 @@ LayoutMatching::LayoutMatching(QWidget *parent)
 
 	m_pGraphView = new GraphWindow;
 
-	ReadRectsFromFile("rects.txt");
-	CalculateIntersections();
-
 	connect(ui.calculateButton, &QPushButton::pressed, this, &LayoutMatching::OnCalculateMatching);
-}
-
-void LayoutMatching::ReadRectsFromFile(QString const& sFilename)
-{
-	QFile file(sFilename);
-	if (!file.open(QIODevice::ReadOnly))
-		return;
-
-	m_vecRects.clear();
-
-	QTextStream in(&file);
-	while (!in.atEnd())
-	{
-		QStringList aRectCoords = in.readLine().split(",");
-		if (aRectCoords.size() != 4)
-			continue;
-
-		int nLeft = aRectCoords[0].toInt();
-		int nTop = aRectCoords[1].toInt();
-		int nWidth = aRectCoords[2].toInt();
-		int nHeight = aRectCoords[3].toInt();
-
-		m_vecRects.push_back(QRectF(nLeft, nTop, nWidth, nHeight));
-	}
-}
-
-void LayoutMatching::CalculateIntersections()
-{
-	m_vecIntersections.clear();
-	for (int i = 0; i < m_vecRects.size(); ++i)
-	{
-		for (int j = i + 1; j < m_vecRects.size(); ++j)
-		{
-			QRectF rcRes = m_vecRects[i].intersected(m_vecRects[j]);
-			if (rcRes.isEmpty())
-				continue;
-
-			m_vecIntersections.push_back(rcRes);
-		}
-	}
+	connect(ui.actRectIndexes, &QAction::toggled, this, &LayoutMatching::OnShowIndexesToggled);
+	connect(ui.actFileOpen, &QAction::triggered, this, &LayoutMatching::OnOpenFile);
 }
 
 void LayoutMatching::paintEvent(QPaintEvent* event)
 {
-	QPainter painter(this);
-	DrawRects(&painter);
+	//QPainter painter(this);
+	//DrawRegions(&painter);
+
+	//if (m_pCurrentPath)
+	//	painter.drawPath(*m_pCurrentPath);
+
+	//if (m_bFirstPress && !m_bSecondPress)
+	//{
+	//	painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
+	//	painter.drawLine(m_point1, m_point2);
+	//}
+	//if (m_bFirstPress && m_bSecondPress)
+	//{
+	//	painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+	//	painter.drawLine(m_point1, m_point2);
+	//	m_bSecondPress = false;
+	//}
 }
 
-void LayoutMatching::DrawRects(QPainter* painter)
+void LayoutMatching::GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions, std::vector<std::vector<int>>& G)
 {
-	painter->save();
+	G.resize(vecRegions.size());
+	for (auto& row : G)
+		row.resize(vecRegions.size());
 
-	painter->setPen(QPen(QBrush(Qt::blue), 3));
-	for (auto const& oRect : m_vecRects)
+	for (int i = 0; i < vecRegions.size(); i++)
 	{
-		painter->drawRect(oRect);
-		painter->save();
-
-		painter->setPen(QPen(QBrush(Qt::blue), 1.5));
-
-		painter->restore();
-		painter->fillRect(oRect, QBrush(Qt::blue, Qt::BDiagPattern));
+		G[i][i] = 0;
+		for (int j = i + 1; j < vecRegions.size(); j++)
+		{
+			int intersectArea = Region::getPainterPathArea(vecRegions[i].intersected(vecRegions[j]));
+			G[i][j] = intersectArea;
+			G[j][i] = intersectArea;
+		}
 	}
-
-	painter->setPen(QPen(QBrush(Qt::red), 3));
-	for (auto const& oRect : m_vecIntersections)
-	{
-		painter->drawRect(oRect);
-		painter->fillRect(oRect, QBrush(Qt::red, Qt::FDiagPattern));
-	}
-
-	painter->restore();
 }
 
 void LayoutMatching::CalculateMatching()
 {
-	constexpr int V = 6;
-	std::vector<std::vector<int>> G = 
-	{
-		{0, 2, 0, 5, 0, 0},
-		{2, 0, 20, 0, 0, 0},
-		{0, 20, 0, 40, 0, 19},
-		{5, 0, 40, 0, 30, 0},
-		{0, 0, 0, 30, 0, 0},
-		{0, 0, 19, 0, 0, 0},
-	};
+	QVector<QPainterPath> const& vecRegions = ui.canvasWidget->GetRegions();
+	std::vector<std::vector<int>> G;
+
+	GetMatrixFromRegions(vecRegions, G);
 
 	std::pair<std::vector<int>, std::vector<int>> bipartitionIndexes;
 	if (!Graph::isBipartite(G, bipartitionIndexes))
+	{
 		QMessageBox::information(this, "Error", "Graph created from the layout isn't bipartite");
+		return;
+	}
 
 	std::vector<std::vector<int>> adjMatrix;
 	Graph::createAdjFromBipartition(G, bipartitionIndexes, adjMatrix);
@@ -132,4 +95,19 @@ void LayoutMatching::CalculateMatching()
 void LayoutMatching::OnCalculateMatching()
 {
 	CalculateMatching();
+}
+
+void LayoutMatching::OnOpenFile()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open Regions File"), "", tr("All Files (*)"));
+	
+	QFile f(fileName);
+	auto regions = Region::readFromFile(f);
+
+	ui.canvasWidget->SetRegions(regions);
+}
+
+void LayoutMatching::OnShowIndexesToggled(bool bChecked)
+{
+	ui.canvasWidget->SetShowIndexes(bChecked);
 }

@@ -1,14 +1,15 @@
 #include "LayoutMatching.h"
 #include <QtWidgets/QApplication>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	a.setStyle("Fusion");
 
-// #ifdef Q_OS_WIN
-//    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", QSettings::NativeFormat);
-//   if (settings.value("AppsUseLightTheme") == 0) 
+//#ifdef Q_OS_WIN
+//	QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", QSettings::NativeFormat);
+//	if (settings.value("AppsUseLightTheme") == 0) 
     {
         QPalette darkPalette;
 
@@ -27,15 +28,15 @@ int main(int argc, char *argv[])
         darkPalette.setColor(QPalette::ButtonText, Qt::white);
         darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, clrDisabled);
         darkPalette.setColor(QPalette::BrightText, Qt::red);
-        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Link, QColor(171, 177, 181));
 
-        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Highlight, QColor(171, 177, 181));
         darkPalette.setColor(QPalette::HighlightedText, Qt::black);
         darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, clrDisabled);
 
         qApp->setPalette(darkPalette);
 
-        qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
+        qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #abb1b5; border: 1px solid white; }");
     }
 //#endif
 

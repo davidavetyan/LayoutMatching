@@ -4,6 +4,9 @@
 #include "ui_LayoutMatching.h"
 
 #include <QPointer>
+#include <QPainterPath>
+
+#include "region.h"
 
 class GraphWindow;
 
@@ -14,20 +17,18 @@ class LayoutMatching : public QMainWindow
 public:
 	LayoutMatching(QWidget *parent = Q_NULLPTR);
 
-	void ReadRectsFromFile(QString const& sFilename);
-	void CalculateIntersections();
-
 	void CalculateMatching();
 
 	void paintEvent(QPaintEvent* event) override;
-	void DrawRects(QPainter* painter);
+
+	static void GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions, std::vector<std::vector<int>>& G);
 
 public slots:
 	void OnCalculateMatching();
+	void OnShowIndexesToggled(bool bChecked);
+	void OnOpenFile();
 
 private:
 	Ui::LayoutMatchingClass ui;
-	QVector<QRectF> m_vecRects;
-	QVector<QRectF> m_vecIntersections;
 	QPointer<GraphWindow> m_pGraphView;
 };

@@ -334,7 +334,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Показывать веса</string>
+         <string>Show weights</string>
         </property>
         <property name="text">
          <string/>
@@ -372,7 +372,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Удалить выделенное</string>
+         <string>Delete selected</string>
         </property>
         <property name="text">
          <string/>

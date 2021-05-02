@@ -115,6 +115,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algoritms.cpp" />
+    <ClCompile Include="canvas.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="graphwindow.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="mgraphview.cpp" />
     <ClCompile Include="mscene.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="region.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="LayoutMatching.h" />
@@ -137,8 +139,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="algorithms.h" />
+    <ClInclude Include="canvas.h" />
     <ClInclude Include="edge.h" />
     <ClInclude Include="graph.h" />
+    <ClInclude Include="region.h" />
     <QtMoc Include="helpbrowser.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>

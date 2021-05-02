@@ -3,11 +3,12 @@
 #include <QtWidgets>
 class MScene;
 
-class InformationDialog : public QDialog{
+class InformationDialog : public QDialog
+{
 	Q_OBJECT
 
 public:
-	InformationDialog(const QString& strPath,const QString& strFileName, QWidget* pwgt       = 0 );
+	InformationDialog(const QString& strPath,const QString& strFileName, QWidget* pwgt = 0 );
 
 	InformationDialog(MScene * scene, QWidget * par=0);
 

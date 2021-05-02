@@ -81,6 +81,12 @@
     <ClCompile Include="helpbrowser.cpp">
       <Filter>GraphView\Impl</Filter>
     </ClCompile>
+    <ClCompile Include="canvas.cpp">
+      <Filter>Layout\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="region.cpp">
+      <Filter>Layout\Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="LayoutMatching.ui">
@@ -124,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="node.h">
       <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="canvas.h">
+      <Filter>Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="region.h">
+      <Filter>Layout</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
