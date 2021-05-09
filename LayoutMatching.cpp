@@ -17,6 +17,8 @@ LayoutMatching::LayoutMatching(QWidget *parent)
 
 	m_pGraphView = new GraphWindow;
 
+	ui.canvasWidget->setFocus();
+
 	connect(ui.calculateButton, &QPushButton::pressed, this, &LayoutMatching::OnCalculateMatching);
 	connect(ui.actRectIndexes, &QAction::toggled, this, &LayoutMatching::OnShowIndexesToggled);
 	connect(ui.actFileOpen, &QAction::triggered, this, &LayoutMatching::OnOpenFile);

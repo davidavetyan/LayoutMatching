@@ -24,6 +24,7 @@ public:
 	void mousePressEvent(QMouseEvent* e) override;
 	void mouseDoubleClickEvent(QMouseEvent* e) override;
 	void mouseMoveEvent(QMouseEvent* e) override;
+	void keyPressEvent(QKeyEvent* e) override;
 
 	void DrawRegions(QPainter* painter);
 

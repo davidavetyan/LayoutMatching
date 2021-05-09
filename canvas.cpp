@@ -130,6 +130,20 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
     }
 }
 
+void Canvas::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key() == Qt::Key_Escape)
+    {
+        delete m_pCurrentPath;
+        m_pCurrentPath = nullptr;
+        m_bDrawing = false;
+        m_bFirstPress = false;
+    	m_bSecondPress = false;
+
+        repaint();
+    }
+}
+
 void Canvas::DrawRegions(QPainter* painter)
 {
     painter->save();
