@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QtWidgets/QMainWindow>
 #include "ui_LayoutMatching.h"
+#include <QtWidgets/QMainWindow>
 
-#include <QPointer>
 #include <QPainterPath>
+#include <QPointer>
 
 #include "region.h"
 
@@ -12,23 +12,24 @@ class GraphWindow;
 
 class LayoutMatching : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	LayoutMatching(QWidget *parent = Q_NULLPTR);
+    LayoutMatching(QWidget* parent = Q_NULLPTR);
 
-	void CalculateMatching();
+    void CalculateMatching();
 
-	void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
-	static void GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions, std::vector<std::vector<int>>& G);
+    static void GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions,
+                                     std::vector<std::vector<int>>& G);
 
 public slots:
-	void OnCalculateMatching();
-	void OnShowIndexesToggled(bool bChecked);
-	void OnOpenFile();
+    void OnCalculateMatching();
+    void OnShowIndexesToggled(bool bChecked);
+    void OnOpenFile();
 
 private:
-	Ui::LayoutMatchingClass ui;
-	QPointer<GraphWindow> m_pGraphView;
+    Ui::LayoutMatchingClass ui;
+    QPointer<GraphWindow> m_pGraphView;
 };

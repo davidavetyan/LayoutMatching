@@ -1,0 +1,54 @@
+---
+Language: Cpp
+BasedOnStyle: Microsoft
+
+UseTab: Never
+ColumnLimit: 100
+MaxEmptyLinesToKeep: 2
+ReflowComments: false
+LineEnding: LF
+
+AccessModifierOffset: -4
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Pointer
+
+AlwaysBreakTemplateDeclarations: Yes
+SpaceAfterTemplateKeyword: false
+
+# AlignConsecutiveAssignments: Consecutive
+# AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignAfterOpenBracket: Align
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 1
+
+BreakConstructorInitializers: BeforeComma
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterNamespace: false
+  BeforeLambdaBody: true
+  BeforeWhile: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+
+NamespaceIndentation: None
+IndentPPDirectives: AfterHash
+
+SpaceAfterCStyleCast: false
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeParens: ControlStatementsExceptControlMacros
+SpacesInParens: Custom
+SpacesInParensOptions:
+  InConditionalStatements: false
+  Other: false
+
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortLambdasOnASingleLine: All
+
+PackConstructorInitializers: CurrentLine
+Cpp11BracedListStyle: false
+...

@@ -4,112 +4,116 @@
 #include "graphwindow.h"
 
 #include <QFile>
+#include <QMessageBox>
 #include <QPainter>
 #include <QTextStream>
-#include <QMessageBox>
 
 #include <vector>
 
-LayoutMatching::LayoutMatching(QWidget *parent)
-	: QMainWindow(parent)
+LayoutMatching::LayoutMatching(QWidget* parent) : QMainWindow(parent)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
 
-	m_pGraphView = new GraphWindow;
+    m_pGraphView = new GraphWindow;
 
-	ui.canvasWidget->setFocus();
+    ui.canvasWidget->setFocus();
 
-	connect(ui.calculateButton, &QPushButton::pressed, this, &LayoutMatching::OnCalculateMatching);
-	connect(ui.actRectIndexes, &QAction::toggled, this, &LayoutMatching::OnShowIndexesToggled);
-	connect(ui.actFileOpen, &QAction::triggered, this, &LayoutMatching::OnOpenFile);
+    connect(ui.calculateButton, &QPushButton::pressed, this, &LayoutMatching::OnCalculateMatching);
+    connect(ui.actRectIndexes, &QAction::toggled, this, &LayoutMatching::OnShowIndexesToggled);
+    connect(ui.actFileOpen, &QAction::triggered, this, &LayoutMatching::OnOpenFile);
 }
 
 void LayoutMatching::paintEvent(QPaintEvent* event)
 {
-	//QPainter painter(this);
-	//DrawRegions(&painter);
+#if 0
+    QPainter painter(this);
+    DrawRegions(&painter);
 
-	//if (m_pCurrentPath)
-	//	painter.drawPath(*m_pCurrentPath);
+    if (m_pCurrentPath)
+      painter.drawPath(*m_pCurrentPath);
 
-	//if (m_bFirstPress && !m_bSecondPress)
-	//{
-	//	painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
-	//	painter.drawLine(m_point1, m_point2);
-	//}
-	//if (m_bFirstPress && m_bSecondPress)
-	//{
-	//	painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-	//	painter.drawLine(m_point1, m_point2);
-	//	m_bSecondPress = false;
-	//}
+    if (m_bFirstPress && !m_bSecondPress)
+    {
+      painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
+      painter.drawLine(m_point1, m_point2);
+    }
+    if (m_bFirstPress && m_bSecondPress)
+    {
+      painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+      painter.drawLine(m_point1, m_point2);
+      m_bSecondPress = false;
+    }
+#endif
 }
 
-void LayoutMatching::GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions, std::vector<std::vector<int>>& G)
+void LayoutMatching::GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions,
+                                          std::vector<std::vector<int>>& G)
 {
-	G.resize(vecRegions.size());
-	for (auto& row : G)
-		row.resize(vecRegions.size());
+    G.resize(vecRegions.size());
+    for (auto& row : G)
+        row.resize(vecRegions.size());
 
-	for (int i = 0; i < vecRegions.size(); i++)
-	{
-		G[i][i] = 0;
-		for (int j = i + 1; j < vecRegions.size(); j++)
-		{
-			int intersectArea = Region::getPainterPathArea(vecRegions[i].intersected(vecRegions[j]));
-			G[i][j] = intersectArea;
-			G[j][i] = intersectArea;
-		}
-	}
+    for (int i = 0; i < vecRegions.size(); i++)
+    {
+        G[i][i] = 0;
+        for (int j = i + 1; j < vecRegions.size(); j++)
+        {
+            int intersectArea =
+                Region::getPainterPathArea(vecRegions[i].intersected(vecRegions[j]));
+            G[i][j] = intersectArea;
+            G[j][i] = intersectArea;
+        }
+    }
 }
 
 void LayoutMatching::CalculateMatching()
 {
-	QVector<QPainterPath> const& vecRegions = ui.canvasWidget->GetRegions();
-	std::vector<std::vector<int>> G;
+    QVector<QPainterPath> const& vecRegions = ui.canvasWidget->GetRegions();
+    std::vector<std::vector<int>> G;
 
-	GetMatrixFromRegions(vecRegions, G);
+    GetMatrixFromRegions(vecRegions, G);
 
-	std::pair<std::vector<int>, std::vector<int>> bipartitionIndexes;
-	if (!Graph::isBipartite(G, bipartitionIndexes))
-	{
-		QMessageBox::information(this, "Error", "Graph created from the layout isn't bipartite");
-		return;
-	}
+    std::pair<std::vector<int>, std::vector<int>> bipartitionIndexes;
+    if (!Graph::isBipartite(G, bipartitionIndexes))
+    {
+        QMessageBox::information(this, "Error", "Graph created from the layout isn't bipartite");
+        return;
+    }
 
-	std::vector<std::vector<int>> adjMatrix;
-	Graph::createAdjFromBipartition(G, bipartitionIndexes, adjMatrix);
+    std::vector<std::vector<int>> adjMatrix;
+    Graph::createAdjFromBipartition(G, bipartitionIndexes, adjMatrix);
 
-	std::vector<std::vector<int>> hungarianMask;
-	Graph::Hungarian::solveHungarian(adjMatrix, hungarianMask);
+    std::vector<std::vector<int>> hungarianMask;
+    Graph::Hungarian::solveHungarian(adjMatrix, hungarianMask);
 
-	std::vector<std::pair<int, int>> edges;
-	Graph::Hungarian::getEdgesFromHungarian(adjMatrix, bipartitionIndexes, hungarianMask, edges);
+    std::vector<std::pair<int, int>> edges;
+    Graph::Hungarian::getEdgesFromHungarian(adjMatrix, bipartitionIndexes, hungarianMask, edges);
 
-	if (!m_pGraphView)
-		m_pGraphView = new GraphWindow;
-	m_pGraphView->createGraphFromMatrix(G, &edges);
+    if (!m_pGraphView)
+        m_pGraphView = new GraphWindow;
+    m_pGraphView->createGraphFromMatrix(G, &edges);
 
-	m_pGraphView->resize(600, 600);
-	m_pGraphView->show();
+    m_pGraphView->resize(600, 600);
+    m_pGraphView->show();
 }
 
 void LayoutMatching::OnCalculateMatching()
 {
-	CalculateMatching();
+    CalculateMatching();
 }
 
 void LayoutMatching::OnOpenFile()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open Regions File"), "", tr("All Files (*)"));
-	
-	QFile f(fileName);
-	auto regions = Region::readFromFile(f);
+    QString fileName =
+        QFileDialog::getOpenFileName(this, tr("Open Regions File"), "", tr("All Files (*)"));
 
-	ui.canvasWidget->SetRegions(regions);
+    QFile f(fileName);
+    auto regions = Region::readFromFile(f);
+
+    ui.canvasWidget->SetRegions(regions);
 }
 
 void LayoutMatching::OnShowIndexesToggled(bool bChecked)
 {
-	ui.canvasWidget->SetShowIndexes(bChecked);
+    ui.canvasWidget->SetShowIndexes(bChecked);
 }
