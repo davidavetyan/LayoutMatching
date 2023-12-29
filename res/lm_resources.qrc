@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/gv">
+        <file>icons/graph.png</file>
+        <file>icons/main.png</file>
+        <file>icons/help.png</file>
+        <file>icons/settings.png</file>
+        <file>toolicons/delete.png</file>
+        <file>toolicons/grph.png</file>
+        <file>toolicons/png.png</file>
+        <file>toolicons/select.png</file>
+        <file>toolicons/setting.png</file>
+        <file>toolicons/txt.png</file>
+        <file>toolicons/FAQ.png</file>
+        <file>toolicons/values.png</file>
+        <file>toolicons/circle.png</file>
+        <file>toolicons/rect.png</file>
+        <file>toolicons/rhomb.png</file>
+    </qresource>
+</RCC>

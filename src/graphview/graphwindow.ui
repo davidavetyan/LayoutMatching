@@ -122,7 +122,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/circle.png</normaloff>Resources/toolIcons/circle.png</iconset>
+          <normaloff>:/gv/toolicons/circle.png</normaloff>:/gv/toolicons/circle.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -166,7 +166,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/rect.png</normaloff>Resources/toolIcons/rect.png</iconset>
+          <normaloff>:/gv/toolicons/rect.png</normaloff>:/gv/toolicons/rect.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -207,7 +207,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/rhomb.png</normaloff>Resources/toolIcons/rhomb.png</iconset>
+          <normaloff>:/gv/toolicons/rhomb.png</normaloff>:/gv/toolicons/rhomb.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -306,7 +306,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/setting.png</normaloff>Resources/toolIcons/setting.png</iconset>
+          <normaloff>:/gv/toolicons/setting.png</normaloff>:/gv/toolicons/setting.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -341,7 +341,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/values.png</normaloff>Resources/toolIcons/values.png</iconset>
+          <normaloff>:/gv/toolicons/values.png</normaloff>:/gv/toolicons/values.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -379,7 +379,7 @@
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>Resources/toolIcons/delete.png</normaloff>Resources/toolIcons/delete.png</iconset>
+          <normaloff>:/gv/toolicons/delete.png</normaloff>:/gv/toolicons/delete.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -426,7 +426,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../../res/lm_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

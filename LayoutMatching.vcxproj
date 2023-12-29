@@ -64,7 +64,7 @@
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -98,7 +98,7 @@
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GeneratedFiles;.\GeneratedFiles\$(ConfigurationName);.\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -128,42 +128,38 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="algoritms.cpp" />
-    <ClCompile Include="canvas.cpp" />
-    <ClCompile Include="edge.cpp" />
-    <ClCompile Include="graph.cpp" />
-    <ClCompile Include="graphwindow.cpp" />
-    <ClCompile Include="helpbrowser.cpp" />
-    <ClCompile Include="LayoutMatching.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mgraphview.cpp" />
-    <ClCompile Include="mscene.cpp" />
-    <ClCompile Include="node.cpp" />
-    <ClCompile Include="region.cpp" />
+    <ClCompile Include="src\app\layoutmatching.cpp" />
+    <ClCompile Include="src\app\main.cpp" />
+    <ClCompile Include="src\core\algorithms.cpp" />
+    <ClCompile Include="src\core\canvas.cpp" />
+    <ClCompile Include="src\core\graph.cpp" />
+    <ClCompile Include="src\core\region.cpp" />
+    <ClCompile Include="src\graphview\edge.cpp" />
+    <ClCompile Include="src\graphview\graphwindow.cpp" />
+    <ClCompile Include="src\graphview\helpbrowser.cpp" />
+    <ClCompile Include="src\graphview\mgraphview.cpp" />
+    <ClCompile Include="src\graphview\mscene.cpp" />
+    <ClCompile Include="src\graphview\node.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="LayoutMatching.h" />
+    <ClInclude Include="src\graphview\edge.h" />
+    <ClInclude Include="src\graphview\mgraphview.h" />
+    <ClInclude Include="src\graphview\mscene.h" />
+    <ClInclude Include="src\graphview\node.h" />
+    <QtMoc Include="src\graphview\helpbrowser.h" />
+    <QtMoc Include="src\graphview\graphwindow.h" />
+    <QtMoc Include="src\app\layoutmatching.h" />
+    <ClInclude Include="src\core\algorithms.h" />
+    <ClInclude Include="src\core\canvas.h" />
+    <ClInclude Include="src\core\graph.h" />
+    <ClInclude Include="src\core\region.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="graphwindow.ui" />
-    <QtUic Include="LayoutMatching.ui" />
+    <QtUic Include="src\app\layoutmatching.ui" />
+    <QtUic Include="src\graphview\graphwindow.ui" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="LayoutMatching.qrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="algorithms.h" />
-    <ClInclude Include="canvas.h" />
-    <ClInclude Include="edge.h" />
-    <ClInclude Include="graph.h" />
-    <ClInclude Include="region.h" />
-    <QtMoc Include="helpbrowser.h">
-    </QtMoc>
-    <ClInclude Include="mgraphview.h" />
-    <ClInclude Include="mscene.h" />
-    <ClInclude Include="node.h" />
-    <QtMoc Include="graphwindow.h">
-    </QtMoc>
+    <QtRcc Include="res\lm_resources.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
