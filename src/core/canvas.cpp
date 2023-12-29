@@ -1,39 +1,36 @@
 #include "Canvas.h"
-#include <cmath>
 #include <QPainterPath>
+#include <cmath>
 
-Canvas::Canvas(QWidget* p)
-    : m_bShowIndexes(false),
-      m_bDrawing(false),
-	  m_pCurrentPath(nullptr)
+Canvas::Canvas(QWidget* p) : m_bShowIndexes(false), m_bDrawing(false), m_pCurrentPath(nullptr)
 {
     m_bFirstPress = false;
     m_bSecondPress = false;
-    
+
     setMouseTracking(true);
 
-    setMinimumSize(600,700);
+    setMinimumSize(600, 700);
 }
 
-void Canvas::paintEvent(QPaintEvent* e) 
+void Canvas::paintEvent(QPaintEvent* e)
 {
     QPainter painter(this);
 
     DrawRegions(&painter);
 
     if (m_pCurrentPath)
-    	painter.drawPath(*m_pCurrentPath);
+        painter.drawPath(*m_pCurrentPath);
 
     if (m_bFirstPress && !m_bSecondPress)
     {
-    	painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
-    	painter.drawLine(m_point1, m_point2);
+        painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
+        painter.drawLine(m_point1, m_point2);
     }
     if (m_bFirstPress && m_bSecondPress)
     {
-    	painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-    	painter.drawLine(m_point1, m_point2);
-    	m_bSecondPress = false;
+        painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+        painter.drawLine(m_point1, m_point2);
+        m_bSecondPress = false;
     }
 }
 
@@ -53,7 +50,7 @@ void Canvas::mousePressEvent(QMouseEvent* e)
         m_point2 = m_point1;
         m_bFirstPress = true;
     }
-    else if (m_bFirstPress && !m_bSecondPress) 
+    else if (m_bFirstPress && !m_bSecondPress)
     {
         m_point1 = m_pCurrentPath->currentPosition();
         m_bSecondPress = true;
@@ -67,20 +64,20 @@ void Canvas::mouseDoubleClickEvent(QMouseEvent* e)
 {
     m_bFirstPress = false;
     m_bSecondPress = false;
-	
+
     m_point1 = e->pos();
     m_point2 = e->pos();
-	
+
     if (m_pCurrentPath)
     {
         QPointF firstPoint = m_pCurrentPath->elementAt(0);
         QPointF currentPoint = m_pCurrentPath->currentPosition();
 
-    	if (firstPoint.x() != currentPoint.x() && firstPoint.y() != currentPoint.y())
+        if (firstPoint.x() != currentPoint.x() && firstPoint.y() != currentPoint.y())
         {
             QPointF intermediatePoint(firstPoint.x(), currentPoint.y());
-    		if (m_pCurrentPath->elementCount() > 2)
-    		{
+            if (m_pCurrentPath->elementCount() > 2)
+            {
                 QPointF lastPoint = m_pCurrentPath->elementAt(m_pCurrentPath->elementCount() - 2);
                 if (currentPoint.y() == lastPoint.y())
                 {
@@ -98,13 +95,13 @@ void Canvas::mouseDoubleClickEvent(QMouseEvent* e)
                         intermediatePoint.setY(firstPoint.y());
                     }
                 }
-    		}
+            }
 
             m_pCurrentPath->lineTo(intermediatePoint);
         }
 
         m_pCurrentPath->lineTo(firstPoint);
-    	
+
         AddRegion(QPainterPath(*m_pCurrentPath));
         m_pCurrentPath = nullptr;
     }
@@ -138,7 +135,7 @@ void Canvas::keyPressEvent(QKeyEvent* e)
         m_pCurrentPath = nullptr;
         m_bDrawing = false;
         m_bFirstPress = false;
-    	m_bSecondPress = false;
+        m_bSecondPress = false;
 
         repaint();
     }
@@ -147,11 +144,11 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 void Canvas::DrawRegions(QPainter* painter)
 {
     painter->save();
-	
-	painter->setPen(QPen(QBrush(Qt::blue), 3));
+
+    painter->setPen(QPen(QBrush(Qt::blue), 3));
     for (int i = 0; i < m_vecPaths.size(); i++)
     {
-		auto const& path = m_vecPaths[i];
+        auto const& path = m_vecPaths[i];
         painter->drawPath(path);
         painter->fillPath(path, QBrush(Qt::blue, Qt::BDiagPattern));
     }
@@ -181,7 +178,7 @@ void Canvas::DrawRegions(QPainter* painter)
 
 void Canvas::SetRegions(QVector<Region> const& regions)
 {
-	for (Region const& region : regions)
+    for (Region const& region : regions)
         m_vecPaths.push_back(region.getPainterPath());
 
     CalculateIntersections();
@@ -220,12 +217,12 @@ void Canvas::CalculateIntersections()
 void Canvas::AddRegion(QPainterPath const& region)
 {
     m_vecPaths.push_back(region);
-	for (int i = 0; i < m_vecPaths.size() - 1; i++)
-	{
+    for (int i = 0; i < m_vecPaths.size() - 1; i++)
+    {
         QPainterPath pathIntersect = (m_vecPaths[i]).intersected(region);
         if (pathIntersect.isEmpty())
             continue;
 
         m_vecIntersections.push_back(pathIntersect);
-	}
+    }
 }
