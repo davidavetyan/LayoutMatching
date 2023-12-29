@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
@@ -51,91 +43,91 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="LayoutMatching.cpp">
-      <Filter>Layout\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="graph.cpp">
-      <Filter>Graph\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="algoritms.cpp">
-      <Filter>Graph\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="mgraphview.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="mscene.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="graphwindow.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="edge.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="node.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="helpbrowser.cpp">
-      <Filter>GraphView\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="canvas.cpp">
-      <Filter>Layout\Impl</Filter>
-    </ClCompile>
-    <ClCompile Include="region.cpp">
-      <Filter>Layout\Impl</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="LayoutMatching.ui">
+    <QtUic Include="src\app\layoutmatching.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="graphwindow.ui">
+    <QtUic Include="src\graphview\graphwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="LayoutMatching.qrc">
+    <QtRcc Include="res\lm_resources.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="LayoutMatching.h">
-      <Filter>Layout</Filter>
-    </QtMoc>
-    <QtMoc Include="graphwindow.h">
-      <Filter>GraphView</Filter>
-    </QtMoc>
-    <QtMoc Include="helpbrowser.h">
-      <Filter>GraphView</Filter>
-    </QtMoc>
+    <ClCompile Include="src\core\canvas.cpp">
+      <Filter>Layout\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\region.cpp">
+      <Filter>Layout\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\edge.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\graphwindow.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\helpbrowser.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\mgraphview.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\mscene.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphview\node.cpp">
+      <Filter>GraphView\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\algorithms.cpp">
+      <Filter>Graph\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graph.cpp">
+      <Filter>Graph\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\layoutmatching.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app\main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graph.h">
-      <Filter>Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="algorithms.h">
-      <Filter>Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="mgraphview.h">
-      <Filter>GraphView</Filter>
-    </ClInclude>
-    <ClInclude Include="mscene.h">
-      <Filter>GraphView</Filter>
-    </ClInclude>
-    <ClInclude Include="edge.h">
-      <Filter>GraphView</Filter>
-    </ClInclude>
-    <ClInclude Include="node.h">
-      <Filter>GraphView</Filter>
-    </ClInclude>
-    <ClInclude Include="canvas.h">
+    <ClInclude Include="src\core\canvas.h">
       <Filter>Layout</Filter>
     </ClInclude>
-    <ClInclude Include="region.h">
+    <ClInclude Include="src\core\region.h">
       <Filter>Layout</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphview\edge.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphview\mgraphview.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphview\mscene.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphview\node.h">
+      <Filter>GraphView</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\algorithms.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\graph.h">
+      <Filter>Graph</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\graphview\graphwindow.h">
+      <Filter>GraphView</Filter>
+    </QtMoc>
+    <QtMoc Include="src\graphview\helpbrowser.h">
+      <Filter>GraphView</Filter>
+    </QtMoc>
+    <QtMoc Include="src\app\layoutmatching.h">
+      <Filter>Application</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

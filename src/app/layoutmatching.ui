@@ -119,8 +119,5 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="LayoutMatching.qrc"/>
- </resources>
  <connections/>
 </ui>

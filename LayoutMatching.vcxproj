@@ -128,6 +128,13 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <QtUic Include="src\app\layoutmatching.ui" />
+    <QtUic Include="src\graphview\graphwindow.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="res\lm_resources.qrc" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\app\layoutmatching.cpp" />
     <ClCompile Include="src\app\main.cpp" />
     <ClCompile Include="src\core\algorithms.cpp" />
@@ -142,24 +149,17 @@
     <ClCompile Include="src\graphview\node.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\app\layoutmatching.h" />
+    <ClInclude Include="src\core\algorithms.h" />
+    <ClInclude Include="src\core\canvas.h" />
+    <ClInclude Include="src\core\graph.h" />
+    <ClInclude Include="src\core\region.h" />
     <ClInclude Include="src\graphview\edge.h" />
     <ClInclude Include="src\graphview\mgraphview.h" />
     <ClInclude Include="src\graphview\mscene.h" />
     <ClInclude Include="src\graphview\node.h" />
     <QtMoc Include="src\graphview\helpbrowser.h" />
     <QtMoc Include="src\graphview\graphwindow.h" />
-    <QtMoc Include="src\app\layoutmatching.h" />
-    <ClInclude Include="src\core\algorithms.h" />
-    <ClInclude Include="src\core\canvas.h" />
-    <ClInclude Include="src\core\graph.h" />
-    <ClInclude Include="src\core\region.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="src\app\layoutmatching.ui" />
-    <QtUic Include="src\graphview\graphwindow.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="res\lm_resources.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
