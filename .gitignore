@@ -31,10 +31,25 @@
 *.out
 *.app
 
-# Intermediate files
+# User-specific files
+*.suo
+*.user
+
+# Visual Studio cache directories
 .vs/
+.vscode/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
 build/
-LayoutMatching.vcxproj.user
+
+# Intermediate files
+GeneratedFiles/
 
 # Temporary files
 *.log
