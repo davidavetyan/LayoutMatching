@@ -23,7 +23,4 @@ void getEdgesFromHungarian(std::vector<std::vector<int>> const& adjMatrix,
                            std::vector<std::pair<int, int>>& edges);
 } // namespace Hungarian
 
-//bool bipartiteMatch(int** bipartiteGraph, int M, int N, int u, bool visited[], int assign[]);
-//
-//int maxMatch(int M, int N);
 } // namespace Graph

@@ -2,14 +2,27 @@
 #include <QSettings>
 #include <QtWidgets/QApplication>
 
+bool applyColorStyle();
+
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
     a.setStyle("Fusion");
 
-    //#ifdef Q_OS_WIN
-    //	QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", QSettings::NativeFormat);
-    //	if (settings.value("AppsUseLightTheme") == 0)
+    applyColorStyle();
+
+    LayoutMatching w;
+    w.show();
+    return a.exec();
+}
+
+bool applyColorStyle()
+{
+#ifdef Q_OS_WIN
+    QSettings settings(
+        "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        QSettings::NativeFormat);
+    if (settings.value("AppsUseLightTheme") == 0)
     {
         QPalette darkPalette;
 
@@ -39,9 +52,7 @@ int main(int argc, char* argv[])
         qApp->setStyleSheet(
             "QToolTip { color: #ffffff; background-color: #abb1b5; border: 1px solid white; }");
     }
-    //#endif
-
-    LayoutMatching w;
-    w.show();
-    return a.exec();
+    return true;
+#endif
+    return false;
 }

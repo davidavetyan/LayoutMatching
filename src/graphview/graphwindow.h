@@ -67,10 +67,10 @@ private slots:
     void cleanGraph();
     void selectAll();
 
-    void showValues(bool a); //show edge values
+    void showValues(bool a); // show edge values
     void setDelay(int a);
 
-    void advSet(); //show advanced settings
+    void advSet(); // show advanced settings
     void showCreateHints();
     void showTextGraph();
     void setRectShape();
@@ -94,8 +94,8 @@ private:
 
     Ui::GraphWindow* ui;
 
-    bool processing; //is any algorithm in process
-    int msec_delay;  //delay between algorithm steps
+    bool processing; // is any algorithm in process
+    int msec_delay;  // delay between algorithm steps
 };
 
 

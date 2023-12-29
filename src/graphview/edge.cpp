@@ -1,13 +1,14 @@
 #include <QtWidgets>
-#include <math.h>
+#include <cmath>
 
 #include "edge.h"
 #include "mgraphview.h"
 #include "mscene.h"
 #include "node.h"
 
-static const double Pi = 3.14159265358979323846264338327950288419717;
-static double TwoPi = 2.0 * Pi;
+static const double Pi = M_PI;
+static double TwoPi = M_2_PI;
+
 Edge::Edge(Node* sourceNode, Node* destNode, MScene* sc, int val)
     : source(sourceNode)
     , dest(destNode)
@@ -16,14 +17,14 @@ Edge::Edge(Node* sourceNode, Node* destNode, MScene* sc, int val)
     , main_color(Qt::black)
     , scene(sc)
 {
-    setFlag(GraphicsItemFlag::ItemIsSelectable); //возможность выделения ребра
+    setFlag(GraphicsItemFlag::ItemIsSelectable); // ability to select an edge
 
-    source->addEdge(this);                       //добавить у источника данное ребро и добавить
-    source->addChild(dest);                      //к его детям вершину-ребенка
+    source->addEdge(this);
+    source->addChild(dest);
 
-    dest->addEdge(this);                         //добавить к ребенку данное ребро
+    dest->addEdge(this);
     setZValue(-1);
-    adjust();                                    //пересчитать геометрию
+    adjust(); // recompute the geometry
 }
 
 int Edge::getValue() const
@@ -31,17 +32,18 @@ int Edge::getValue() const
     return value;
 }
 
-//песчет геометрии
 void Edge::adjust()
 {
     QLineF line(mapFromItem(source, 0, 0), mapFromItem(dest, 0, 0));
     qreal length = line.length();
 
-    //int node_diameter = scene->m_diameter(); //извлечение диаметра из сцены
+    //int node_diameter = scene->m_diameter();
     prepareGeometryChange();
 
     if (length > qreal(source->diameter() / 2 + dest->diameter() / 2 - 1))
-    { //вершины не пересекаются
+    { 
+        // nodes don't intersect
+        
         double angle = ::acos(line.dx() / line.length());
         {
             int node_diametr = source->diameter();
@@ -112,7 +114,7 @@ void Edge::adjust()
         }
     }
     else
-        //Если вершины заходят друг на друга
+        // nodes are on top of each other
         sourcePoint = destPoint = line.p1();
 
     source->update();
@@ -129,17 +131,14 @@ QRectF Edge::boundingRect() const
         .adjusted(-extra, -extra, extra, extra);
 }
 
-//виртуальная функция рисования
 void Edge::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    if (sourcePoint == destPoint) //если источник и родитель в одной точке -
-        return;                   //выйти (при заходе вершин друг на друга)
+    if (sourcePoint == destPoint)
+        return;
 
     QLineF line(sourcePoint, destPoint);
-    int arrowSize = scene->arrSize(); //считать размер стрелки
+    int arrowSize = scene->arrSize();
 
-                                      //установка ручки для рисования, в зависимости от того
-    //выделено ли ребро или нет
     if (this->isSelected())
         painter->setPen(QPen(main_color, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     else
@@ -152,16 +151,15 @@ void Edge::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
         angle = TwoPi - angle;
 
 
-    if (scene
-            ->shouldShowValues()) //если установлено свойство "отображать веса" - веса пишутся рядом
+    if (scene->shouldShowValues()) // show the weight next to the edge if enabled
     {
         QPointF c = 0.5 * line.p1() + 0.5 * line.p2() +
                     QPointF(-sin(angle) * 10, cos(Pi - angle) * 10) + QPointF(-15, -10);
         painter->drawText(QRectF(c, QSizeF(30, 20)), Qt::AlignCenter, QString::number(value));
     }
 
-    if (!scene->isOriented()) //если граф неориентированный - стрелки рисовать не нужно
-        return;               //поэтому выход из функции
+    if (!scene->isOriented()) // no arrows for unoriented graphs
+        return;
 
 
     QPointF destArrowP1 =
@@ -171,7 +169,7 @@ void Edge::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
     painter->setBrush(main_color);
     painter->drawPolygon(QPolygonF() << line.p2() << destArrowP1 << destArrowP2);
 
-    if (!have_one_arrow) //если у ребра не одна стрелка - отрисовать вторую
+    if (!have_one_arrow) // draw second arrow if necessary
     {
         QPointF sourceArrowP1 = sourcePoint + QPointF(sin(angle + Pi / 2.7) * arrowSize,
                                                       cos(angle + Pi / 2.7) * arrowSize);
@@ -182,13 +180,12 @@ void Edge::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
     }
 }
 
-//установить одну или две стрелки на ребре
 void Edge::setOneArrowAtEdge(bool ori)
 {
     have_one_arrow = ori;
     if (!have_one_arrow)
     {
-        //если у ребра 2 стрелки - добавить ребенку в дети родителя
+        // if the edge has 2 arrows add child to destination as well
         if (!dest->children().contains(source))
             dest->addChild(source);
     }
@@ -197,7 +194,6 @@ void Edge::setOneArrowAtEdge(bool ori)
     update();
 }
 
-//форма ребра - необходимая для удобного выделения
 QPainterPath Edge::shape() const
 {
     if (sourcePoint == destPoint)
@@ -217,7 +213,6 @@ QPainterPath Edge::shape() const
     return path;
 }
 
-//контекстное меню
 void Edge::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 {
     QGraphicsItem::contextMenuEvent(event);
@@ -233,7 +228,6 @@ void Edge::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 
     QAction* selected_action = menu.exec(event->screenPos());
 
-    //в зависимости от действия вызвать соответствующий метод
     if (selected_action == remove_action)
         scene->removeSelectedNodes();
     else if (selected_action == add_mid_node)
@@ -262,14 +256,13 @@ void Edge::removeEdge()
     source->edges().removeAll(this);
     source->children().removeAll(dest);
 
-    if (!have_one_arrow) //если у ребра 2 стрелки - удалить ребенка у обоих
+    if (!have_one_arrow)
         dest->children().removeAll(source);
 
-    scene->removeItem(this); //удалить со сцены
+    scene->removeItem(this);
     scene->deleted << this;
 }
 
-//обработка 2-го клика - изменить вес или добавить промежуточную вершину
 void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsItem::mouseDoubleClickEvent(event);
@@ -286,7 +279,6 @@ void Edge::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
         addMidNode(event->scenePos());
 }
 
-//добавить промежуточную вершину
 void Edge::addMidNode(QPointF pos)
 {
     scene->addNode(pos);

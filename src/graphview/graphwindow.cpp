@@ -12,42 +12,48 @@ GraphWindow::GraphWindow(QWidget* parent) : QWidget(parent), ui(new Ui::GraphWin
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose, true);
 
+#if 0
     // Create menu bar
-    //	QMenu * file =  new QMenu("Файл");
-    //		file->addAction("Сохранить как текст (.txt)", this, SLOT(saveTextGraph()),QKeySequence("Ctrl+S"));
-    //		file->addAction("Сохранить как форматированный граф (.grph)",this,SLOT(saveGraphWithFormat()),QKeySequence("Ctrl+Shift+S"));
-    //		file->addSeparator();
-    //		file->addAction("Сохранить как картинку (.png)",this,SLOT(savePicture()),QKeySequence("Ctrl+P"));
-    //
-    //	QMenu * graph = new QMenu("Граф");
-    //		graph->addAction("Текстовое представление",this, SLOT(showTextGraph()));
-    //	//	graph->addAction("Таблица смежности");
-    //		graph->addSeparator();
-    //			QAction * show_values = new QAction("Отображать веса");
-    //			show_values->setShortcut(QKeySequence("Ctrl+D"));
-    //			show_values->setCheckable(true);
-    //			connect(show_values,SIGNAL(triggered(bool)),this,SLOT(showValues(bool)));
-    //		graph->addAction(show_values);
-    //		graph->addSeparator();
-    //		graph->addAction("Расширенные настройки",this,SLOT(advSet()),QKeySequence("Ctrl+T"));
-    //		graph->addAction("Выделить все", this, SLOT(selectAll()),QKeySequence("Ctrl+A"));
-    //		graph->addAction("Очистить",this, SLOT(cleanGraph()));
-    //
-    //	QMenu * info = new QMenu("Справка");
-    //		info->addAction("Создание графа",this,SLOT(showCreateHints()));
-    //
-    //	QMenu * alg = new QMenu("Алгоритмы");
-    ////		alg->addAction("Поиск в ширину",this, SLOT(wide_search()));
-    ////		alg->addAction("Поиск в глубину",this,SLOT(deep_search()));
-    //		alg->addSeparator();
-    //		alg->addAction("Алгоритм Флойда",this,SLOT(floyd_alg()));
-    //		//alg->addAction("Алгоритм Гамильтона",this, SLOT(hamilton_alg()));
-    //	QMenuBar * menuBar = new QMenuBar(this);
-    //	menuBar->addMenu(file);
-    //	menuBar->addMenu(graph);
-    //	menuBar->addMenu(info);
-    //	menuBar->addMenu(alg);
-    //	ui->gridLayout->setMenuBar(menuBar);
+    QMenu* file = new QMenu("Файл");
+    file->addAction("Save as text (.txt)", this, SLOT(saveTextGraph()),
+                    QKeySequence("Ctrl+S"));
+    file->addAction("Save as formatted graph (.grph)", this, SLOT(saveGraphWithFormat()),
+                    QKeySequence("Ctrl+Shift+S"));
+    file->addSeparator();
+    file->addAction("Save as image (.png)", this, SLOT(savePicture()),
+                    QKeySequence("Ctrl+P"));
+
+    QMenu* graph = new QMenu("Graph");
+    graph->addAction("Text representation", this, SLOT(showTextGraph()));
+    //graph->addAction("Incidence matrix");
+    graph->addSeparator();
+    QAction* show_values = new QAction("Show weights");
+    show_values->setShortcut(QKeySequence("Ctrl+D"));
+    show_values->setCheckable(true);
+    connect(show_values, SIGNAL(triggered(bool)), this, SLOT(showValues(bool)));
+    graph->addAction(show_values);
+    graph->addSeparator();
+    graph->addAction("Advanced settings", this, SLOT(advSet()), QKeySequence("Ctrl+T"));
+    graph->addAction("Select all", this, SLOT(selectAll()), QKeySequence("Ctrl+A"));
+    graph->addAction("Clear", this, SLOT(cleanGraph()));
+
+    QMenu* info = new QMenu("Help");
+    info->addAction("Creating graphs", this, SLOT(showCreateHints()));
+
+    QMenu* alg = new QMenu("Algorithms");
+    //alg->addAction("Breadth-first search",this, SLOT(wide_search()));
+    //alg->addAction("Depth-first search",this,SLOT(deep_search()));
+    alg->addSeparator();
+    alg->addAction("Floyd's algorithm", this, SLOT(floyd_alg()));
+    //alg->addAction("Hamilton algorithm",this, SLOT(hamilton_alg()));
+    QMenuBar* menuBar = new QMenuBar(this);
+    menuBar->addMenu(file);
+    menuBar->addMenu(graph);
+    menuBar->addMenu(info);
+    menuBar->addMenu(alg);
+    ui->gridLayout->setMenuBar(menuBar);
+#endif
+
     ui->main_graph->setParent(this);
 
 
@@ -469,7 +475,7 @@ void GraphWindow::wide_search()
     slider->setTickPosition(QSlider::TicksBelow);
     slider->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Tool);
     slider->setWindowModality(Qt::WindowModal);
-    slider->setWindowTitle("Задержка алгоритма");
+    slider->setWindowTitle("Waiting for algorithm");
     slider->move(this->pos());
     slider->show();
     connect(slider, &QSlider::valueChanged, this, &GraphWindow::setDelay);
@@ -562,13 +568,11 @@ void GraphWindow::deep_search()
     connect(slider, &QSlider::valueChanged, this, &GraphWindow::setDelay);
     ui->gridLayout->menuBar()->setDisabled(true);
 
-    //алгоритм
     QVector<bool> is_visited;
     is_visited.resize(list.size());
     QQueue<Node*> queue;
     Node* node = (Node*)getMscene()->selectedItems().first();
     is_visited[list.indexOf(node)] = true;
-    ;
 
     queue.push_back(node);
     node->setColor(Qt::red);

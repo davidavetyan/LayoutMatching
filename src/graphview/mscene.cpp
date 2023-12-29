@@ -114,7 +114,7 @@ void MScene::addNode(QPointF position, QString value)
     {
         int i = 0;
         do
-            value = QString::number(i++); //определение автоматического имени
+            value = QString::number(i++); // generate a new name
         while (findNode(value));
     }
     Node* n = new Node(this, value);
@@ -125,12 +125,12 @@ void MScene::addNode(QPointF position, QString value)
 
 void MScene::addEdge(Node* source, Node* dest, int val)
 {
-    if (Node::is_two_nodes_connected(source, dest))
+    if (Node::are_nodes_connected(source, dest))
         return;
 
     if (graph_oriented)
     {
-        if (Node::is_two_nodes_connected(dest, source))
+        if (Node::are_nodes_connected(dest, source))
         {
             // if connected in reverse order set two arrows and exit
             foreach(Edge* ed, dest->edges())
@@ -144,8 +144,8 @@ void MScene::addEdge(Node* source, Node* dest, int val)
     }
     else // non oriented
     {
-        if (Node::is_two_nodes_connected(dest, source) ||
-            Node::is_two_nodes_connected(source, dest))
+        if (Node::are_nodes_connected(dest, source) ||
+            Node::are_nodes_connected(source, dest))
             return;
 
         Edge* ed = new Edge(source, dest, this, val);
@@ -160,7 +160,7 @@ void MScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
     QGraphicsItem* temp =
         itemAt(event->scenePos().x(), event->scenePos().y(), QTransform::fromScale(1, 1));
     if (event->button() == Qt::LeftButton && temp == Q_NULLPTR)
-        //если клик произведен не на вершине или ребре - добавить вершину
+        // if clicked outside of a node or and edge - create a new node
         addNode(event->scenePos());
     qDebug() << "\n number of el " << items().size();
 }
@@ -265,7 +265,7 @@ void MScene::createGraphWithText(QList<QString>& nodes, QList<QStringList>& chil
             {
                 if (a == b)
                     a->setLoop();
-                if (!Node::is_two_nodes_connected(a, b))
+                if (!Node::are_nodes_connected(a, b))
                 {
                     if (p_edge_weights)
                         addEdge(a, b, (*p_edge_weights)[i][k]);

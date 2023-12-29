@@ -3,7 +3,10 @@
 #include <QtWidgets>
 
 class MScene;
-//Класс с виджетом
+
+/**
+    \brief Main graphics view for the graph
+*/
 class MGraphView : public QGraphicsView
 {
 public:
@@ -19,12 +22,9 @@ protected:
     void dropEvent(QDropEvent* event) Q_DECL_OVERRIDE;
     void dragLeaveEvent(QDragLeaveEvent* event) Q_DECL_OVERRIDE;
     void dragMoveEvent(QDragMoveEvent* event) Q_DECL_OVERRIDE;
-    //Переопределенные виртуальные методы для
-    //взаимодействия с виджетом
 
 private:
     void scaleView(qreal scaleFactor);
-    //увеличение масштаба
 
     MScene* scene;
 };

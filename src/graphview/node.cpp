@@ -15,7 +15,6 @@ Node::Node(MScene* graphWidget, QString val) : scene(graphWidget), main_color(Qt
     setToolTip(QString::number(m_diameter));
 }
 
-//форма окружности
 QPainterPath Node::shape() const
 {
     QPainterPath path;
@@ -103,15 +102,13 @@ QVariant Node::itemChange(GraphicsItemChange change, const QVariant& value)
     return QGraphicsItem::itemChange(change, value);
 }
 
-//соединены ли две вершины
-bool Node::is_two_nodes_connected(Node* src, Node* dst)
+bool Node::are_nodes_connected(Node* src, Node* dst)
 {
     if (src->childrenList.contains(dst))
         return true;
     return false;
 }
 
-//контекстное меню
 void Node::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 {
     QGraphicsItem::contextMenuEvent(event);
@@ -278,7 +275,7 @@ void Node::setValue(QString val)
 {
     value = val;
     update();
-} //установить значение
+}
 
 void Node::removeLoop()
 {

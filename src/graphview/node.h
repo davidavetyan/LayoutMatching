@@ -9,38 +9,39 @@ class Edge;
 class MGraphView;
 class MScene;
 
-//Класс для определения вершин графа
+/**
+    \brief Represents a graph node
+*/
 class Node : public QGraphicsItem
 {
     friend class Edge;
     friend class MScene;
     friend QString& operator<<(QString& str, const Node& node);
-    //оператор вывода вершины в строку
+    
 public:
     Node(MScene* graphWidget, QString val = "");
-    //конструктор вершины с заданным значением
 
-    void setColor(QColor col);  //установить цвет
-    void setValue(QString val); //установить значение
-    void removeNode();          //удалить данную вершину
-    void setLoop();             //установить петлю
-    void removeLoop();          //удалить петлю
+    void setColor(QColor col);
+    void setValue(QString val);
+    void removeNode();
+    void setLoop();
+    void removeLoop();
     void setShape(int shape);
     void setDiameter(int diam);
 
-    QString get_val() const; //извлечение значения
+    QString get_val() const;
     QColor get_color() const;
 
-    QList<Edge*>& edges(); //списки ребер и детей
+    QList<Edge*>& edges();
     QList<Node*>& children();
 
-    static bool is_two_nodes_connected(Node* src, Node* dst);
-    //соединены ли две вершины
+    static bool are_nodes_connected(Node* src, Node* dst);
 
     enum
     {
         Type = UserType + 1
-    }; //Тип "вершина"
+    };
+
     int nodeShape() const;
     int diameter() const;
     int type() const override;
@@ -58,20 +59,19 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event) override;
-    //переопределенные методы
 
 private:
     void addChild(Node* child);
     void addEdge(Edge* edge);
 
+private:
+    QList<Edge*> edgeList;
+    QList<Node*> childrenList;
 
-    QList<Edge*> edgeList;     //Список ребер
-    QList<Node*> childrenList; //Смежные вершины
+    MScene* scene; // scene where the vertex is located
 
-    MScene* scene;             //сцена в которых находится вершина
-
-    QColor main_color;         //цвет
-    QString value;             //значение
+    QColor main_color;
+    QString value;
     int shape_type;
     int m_diameter;
 };

@@ -47,7 +47,7 @@ private:
                              QList<QList<bool>>* p_special_edges = nullptr);
 
     QList<Node*> all_nodes;
-    QList<QGraphicsItem*> deleted; //все удаленные со сцены объекты (удаляются позже)
+    QList<QGraphicsItem*> deleted;
     MGraphView* parent;
 
     Node* first;

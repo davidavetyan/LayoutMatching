@@ -25,23 +25,25 @@ LayoutMatching::LayoutMatching(QWidget* parent) : QMainWindow(parent)
 
 void LayoutMatching::paintEvent(QPaintEvent* event)
 {
-    //QPainter painter(this);
-    //DrawRegions(&painter);
+#if 0
+    QPainter painter(this);
+    DrawRegions(&painter);
 
-    //if (m_pCurrentPath)
-    //	painter.drawPath(*m_pCurrentPath);
+    if (m_pCurrentPath)
+      painter.drawPath(*m_pCurrentPath);
 
-    //if (m_bFirstPress && !m_bSecondPress)
-    //{
-    //	painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
-    //	painter.drawLine(m_point1, m_point2);
-    //}
-    //if (m_bFirstPress && m_bSecondPress)
-    //{
-    //	painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
-    //	painter.drawLine(m_point1, m_point2);
-    //	m_bSecondPress = false;
-    //}
+    if (m_bFirstPress && !m_bSecondPress)
+    {
+      painter.setPen(QPen(Qt::white, 1, Qt::DotLine, Qt::FlatCap));
+      painter.drawLine(m_point1, m_point2);
+    }
+    if (m_bFirstPress && m_bSecondPress)
+    {
+      painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::FlatCap));
+      painter.drawLine(m_point1, m_point2);
+      m_bSecondPress = false;
+    }
+#endif
 }
 
 void LayoutMatching::GetMatrixFromRegions(QVector<QPainterPath> const& vecRegions,

@@ -5,7 +5,6 @@ InformationDialog::InformationDialog(const QString& strPath, const QString& strF
                                      QWidget* pwgt)
     : QDialog(pwgt)
 {
-    //окно со справкой на базе браузера
     setWindowFlags(Qt::Dialog);
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinMaxButtonsHint |
                    Qt::WindowCloseButtonHint);
@@ -16,7 +15,7 @@ InformationDialog::InformationDialog(const QString& strPath, const QString& strF
     setWindowTitle("Справка");
 
     QPushButton* pcmdBack = new QPushButton("<<");
-    QPushButton* pcmdHome = new QPushButton("Справка");
+    QPushButton* pcmdHome = new QPushButton("Help");
     QPushButton* pcmdForward = new QPushButton(">>");
     QTextBrowser* ptxtBrowser = new QTextBrowser;
 
@@ -29,7 +28,7 @@ InformationDialog::InformationDialog(const QString& strPath, const QString& strF
     ptxtBrowser->setSearchPaths(QStringList() << strPath);
     ptxtBrowser->setSource(QString("main.htm"));
     ptxtBrowser->setSource(strFileName);
-    //Layout setup
+    // layout setup
     QVBoxLayout* pvbxLayout = new QVBoxLayout;
     QHBoxLayout* phbxLayout = new QHBoxLayout;
     phbxLayout->addWidget(pcmdBack);
@@ -43,8 +42,6 @@ InformationDialog::InformationDialog(const QString& strPath, const QString& strF
     readSettings();
 }
 
-
-//окно с текстовым представлением
 InformationDialog::InformationDialog(const QString& text_view)
 {
     setWindowModality(Qt::ApplicationModal);
@@ -52,9 +49,8 @@ InformationDialog::InformationDialog(const QString& text_view)
     setWindowIcon(QIcon(":/icons/graph.png"));
     setFixedSize(300, 400);
 
-    QPushButton* saveButton = new QPushButton("Сохранить");
-    //сохранение при данной кнопке
-    QPushButton* rejectButton = new QPushButton("Отмена");
+    QPushButton* saveButton = new QPushButton("Save");
+    QPushButton* rejectButton = new QPushButton("Cancel");
     QPlainTextEdit* browser = new QPlainTextEdit;
     browser->setReadOnly(true);
     browser->setPlainText(text_view);
@@ -72,7 +68,6 @@ InformationDialog::InformationDialog(const QString& text_view)
     readSettings();
 }
 
-//фукнция для вывода окна
 bool InformationDialog::outDialog(const QString& text, QString title)
 {
     InformationDialog* temp = new InformationDialog(text);
@@ -87,7 +82,6 @@ bool InformationDialog::outDialog(const QString& text, QString title)
     return false;
 }
 
-//окно с настройками
 InformationDialog::InformationDialog(MScene* scene, QWidget* par)
 {
     scene_for_set = scene;
@@ -181,15 +175,12 @@ InformationDialog::InformationDialog(MScene* scene, QWidget* par)
 InformationDialog::InformationDialog(QWidget* par) : QDialog(par)
 {}
 
-
-//применить и закрыть
 void InformationDialog::ok_changes()
 {
     appl_changes();
     this->close();
 }
 
-//применить настройки
 void InformationDialog::appl_changes()
 {
     scene_for_set->setDiameter(new_diam);
@@ -209,7 +200,6 @@ void InformationDialog::writeSettings()
     settings.setValue(name, saveGeometry());
 }
 
-//установка настроек
 void InformationDialog::readSettings()
 {
     QSettings settings("LETI", "Graph application");

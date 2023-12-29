@@ -21,7 +21,6 @@ public:
         setMinimumSize(366, 500);
         setWindowTitle("Алгоритм Флойда");
         QPushButton* saveButton = new QPushButton("Ок");
-        //сохранение при данной кнопке
         QPushButton* rejectButton = new QPushButton("Отмена");
 
 
@@ -47,13 +46,12 @@ public:
     InformationDialog(QWidget* par = 0);
     ~InformationDialog() { qDebug() << "-help"; }
     static bool outDialog(const QString& text, QString title);
-    //функция для вызова текстового представления
 
 private:
     InformationDialog(const QString& text_view);
-    //конструктор для окна текстового представления
 
-    int new_diam; //параметры для окна настройки
+    // options for settings window
+    int new_diam;
     int arr_size;
     bool oriented;
     MScene* scene_for_set;
@@ -87,10 +85,9 @@ public:
         setWindowModality(Qt::WindowModal);
         setWindowIcon(QIcon(":/icons/graph.png"));
         setMinimumSize(366, 500);
-        setWindowTitle("Алгоритм Флойда");
-        QPushButton* saveButton = new QPushButton("Ок");
-        //сохранение при данной кнопке
-        QPushButton* rejectButton = new QPushButton("Отмена");
+        setWindowTitle("Floyd Algorithm");
+        QPushButton* saveButton = new QPushButton("OK");
+        QPushButton* rejectButton = new QPushButton("Cancel");
 
 
         tbl->resizeColumnsToContents();

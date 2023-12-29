@@ -3,14 +3,16 @@
 #include <QDebug>
 
 namespace RegionToken {
+
 const char* OPEN_REGION = "{";
 const char* CLOSE_REGION = "}";
 const char* SEP = ",";
+
 } // namespace RegionToken
 
 Region::Region(t_contour const& contour)
 {
-    //if(parsRegion(contour))
+    //if(parseRegion(contour))
     m_vecContours.push_back(contour);
 }
 
@@ -70,7 +72,7 @@ QVector<Region> Region::readFromFile(QFile& f)
 
         if (k == 1)
         {
-            //temp=ParsRegionn(vecRegions, currContour);
+            //temp=ParseRegions(vecRegions, currContour);
             if (temp)
             {
                 currContour.clear();
@@ -86,7 +88,7 @@ QVector<Region> Region::readFromFile(QFile& f)
 
 void Region::addContour(t_contour const& contour)
 {
-    if (parsContur(contour))
+    if (parseContour(contour))
         m_vecContours.push_back(contour);
 }
 
@@ -105,86 +107,86 @@ QVector<QVector<QPoint>> Region::GetRegion()
     return m_vecContours;
 }
 
-QVector<QPoint> const& Region::GetContur(const int& index) const
+QVector<QPoint> const& Region::GetContour(const int& index) const
 {
     return m_vecContours[index];
 }
 
-QPoint Region::GetPoint(const int& indexContur, const int& indexPoint) const
+QPoint Region::GetPoint(const int& indexContour, const int& indexPoint) const
 {
-    return m_vecContours[indexContur][indexPoint];
+    return m_vecContours[indexContour][indexPoint];
 }
 
 
-int Region::ConturMinX(const int& index)
+int Region::ContourMinX(const int& index)
 {
-    int min = this->m_vecContours[index][0].x();
-    for (int i = 1; i < this->m_vecContours[index].size(); i++)
-        if (this->m_vecContours[index][i].x() < min)
-            min = this->m_vecContours[index][i].x();
+    int min = m_vecContours[index][0].x();
+    for (int i = 1; i < m_vecContours[index].size(); i++)
+        if (m_vecContours[index][i].x() < min)
+            min = m_vecContours[index][i].x();
     return min;
 }
 
-int Region::ConturMinY(const int& index)
+int Region::ContourMinY(const int& index)
 {
-    int min = this->m_vecContours[index][0].y();
-    for (int i = 1; i < this->m_vecContours[index].size(); i++)
-        if (this->m_vecContours[index][i].y() < min)
-            min = this->m_vecContours[index][i].y();
+    int min = m_vecContours[index][0].y();
+    for (int i = 1; i < m_vecContours[index].size(); i++)
+        if (m_vecContours[index][i].y() < min)
+            min = m_vecContours[index][i].y();
     return min;
 }
 
-int Region::ConturMaxX(const int& index)
+int Region::ContourMaxX(const int& index)
 {
-    int max = this->m_vecContours[index][0].x();
-    for (int i = 1; i < this->m_vecContours[index].size(); i++)
-        if (this->m_vecContours[index][i].x() > max)
-            max = this->m_vecContours[index][i].x();
+    int max = m_vecContours[index][0].x();
+    for (int i = 1; i < m_vecContours[index].size(); i++)
+        if (m_vecContours[index][i].x() > max)
+            max = m_vecContours[index][i].x();
     return max;
 }
 
-int Region::ConturMaxY(const int& index)
+int Region::ContourMaxY(const int& index)
 {
-    int max = this->m_vecContours[index][0].y();
-    for (int i = 1; i < this->m_vecContours[index].size(); i++)
-        if (this->m_vecContours[index][i].y() > max)
-            max = this->m_vecContours[index][i].y();
+    int max = m_vecContours[index][0].y();
+    for (int i = 1; i < m_vecContours[index].size(); i++)
+        if (m_vecContours[index][i].y() > max)
+            max = m_vecContours[index][i].y();
     return max;
 }
 
 int Region::RegionMinX()
 {
-    return this->ConturMinX(0);
+    return ContourMinX(0);
 }
 
 int Region::RegionMinY()
 {
-    return this->ConturMinY(0);
+    return ContourMinY(0);
 }
 
 int Region::RegionMaxX()
 {
-    return this->ConturMaxX(0);
+    return ContourMaxX(0);
 }
 
 int Region::RegionMaxY()
 {
-    return this->ConturMaxX(0);
+    return ContourMaxX(0);
 }
 
 
 int Region::range(Region& R)
 {
     QPoint p;
-    p.setX(abs(this->GetPoint(0, 0).x() - R.GetPoint(0, 0).x()));
-    p.setY(abs(this->GetPoint(0, 0).y() - R.GetPoint(0, 0).y()));
-    for (int i = 0; i < this->GetContur(0).size(); i++)
-        for (int j = 0; j < R.GetContur(0).size(); j++)
+    p.setX(abs(GetPoint(0, 0).x() - R.GetPoint(0, 0).x()));
+    p.setY(abs(GetPoint(0, 0).y() - R.GetPoint(0, 0).y()));
+    for (int i = 0; i < GetContour(0).size(); i++)
+        for (int j = 0; j < R.GetContour(0).size(); j++)
         {
-            if (p.x() > abs(this->GetPoint(0, i).x() - R.GetPoint(0, j).x()))
-                p.setX(abs(this->GetPoint(0, i).x() - R.GetPoint(0, j).x()));
-            if (p.y() > abs(this->GetPoint(0, i).y() - R.GetPoint(0, j).y()))
-                p.setY(abs(this->GetPoint(0, i).y() - R.GetPoint(0, j).y()));
+            if (p.x() > abs(GetPoint(0, i).x() - R.GetPoint(0, j).x()))
+                p.setX(abs(GetPoint(0, i).x() - R.GetPoint(0, j).x()));
+            if (p.y() > abs(GetPoint(0, i).y() - R.GetPoint(0, j).y()))
+                p.setY(abs(GetPoint(0, i).y() - R.GetPoint(0, j).y()));
         }
     if (p.x() > p.y())
         return p.x();
@@ -196,17 +198,17 @@ int Region::perimeter()
 {
     int sum = 0;
 
-    for (int i = 0; i < this->m_vecContours[0].size() - 1; i++)
+    for (int i = 0; i < m_vecContours[0].size() - 1; i++)
     {
-        if (this->m_vecContours[0][i].x() == this->m_vecContours[0][i + 1].x())
-            sum += abs(this->m_vecContours[0][i].y() - this->m_vecContours[0][i + 1].y());
-        if (this->m_vecContours[0][i].y() == this->m_vecContours[0][i + 1].y())
-            sum += abs(this->m_vecContours[0][i].x() - this->m_vecContours[0][i + 1].x());
+        if (m_vecContours[0][i].x() == m_vecContours[0][i + 1].x())
+            sum += abs(m_vecContours[0][i].y() - m_vecContours[0][i + 1].y());
+        if (m_vecContours[0][i].y() == m_vecContours[0][i + 1].y())
+            sum += abs(m_vecContours[0][i].x() - m_vecContours[0][i + 1].x());
     }
-    sum += this->m_vecContours[0].last().x() - m_vecContours[0].first().x();
+    sum += m_vecContours[0].last().x() - m_vecContours[0].first().x();
     return sum;
 }
-// PITI STUGVI
+
 int Region::surface()
 {
     int sum = 0, sum1 = 0, sum2 = 0, sum3 = 0;
@@ -239,11 +241,13 @@ int Region::surface()
     return sum - sum3;
 }
 
-bool Region::ketpatk(const int& x, const int& y)
+bool Region::contains(QPoint point)
 {
     int sum = 0;
-    for (int i = 0; i < this->m_vecContours.size(); i++)
-        for (int j = 0; j < this->m_vecContours[i].size(); j++)
+    int x = point.x();
+    int y = point.y();
+    for (int i = 0; i < m_vecContours.size(); i++)
+        for (int j = 0; j < m_vecContours[i].size(); j++)
             if (x < m_vecContours[i][j].x() && y < m_vecContours[i][j].y())
                 sum++;
     if (sum % 2 == 0)
@@ -252,64 +256,14 @@ bool Region::ketpatk(const int& x, const int& y)
         true;
 }
 
-bool Region::ketgit(const int& x, const int& y)
-{
-    for (int i = 0; i < this->m_vecContours.size(); i++)
-    {
-        QVector<QPoint> v = this->m_vecContours[i];
-        int xx = -1, yy = -1, index = -1;
-
-        for (int j = 0; j < v.size(); j++)
-
-            if (x == v[j].x() && y == v[j].y())
-                return true;
-        for (int i = 0; i < v.size(); i++)
-        {
-
-            if (x == v[i].x())
-            {
-                xx = v[i].x();
-                index = i;
-                break;
-            }
-            if (y == v[i].y())
-            {
-                yy = v[i].x();
-                index = i;
-                break;
-            }
-        }
-
-        if (index >= 0 && index != v.size() - 1)
-        {
-            if (xx > 0)
-            {
-                if ((v[index].y() < y && v[index + 1].y() > y) ||
-                    (v[index].y() > y && v[index + 1].y() < y))
-                    return true;
-            }
-            if (yy > 0)
-            {
-
-                if ((v[index].x() < x && v[index + 1].x() > x) ||
-                    (v[index].x() > x && v[index + 1].x() < x))
-                    return true;
-            }
-            if ((v[index].x() < x && v.last().x() > x))
-                return true;
-        }
-    }
-    return false;
-}
-
-bool Region::intersects(Region& Regionn)
+bool Region::intersects(Region& region)
 {
     QPoint p, p1;
     int x, y, x1, y1;
-    for (int i = 0; i < Regionn.GetContur(0).size() - 1; i++)
+    for (int i = 0; i < region.GetContour(0).size() - 1; i++)
     {
-        p = Regionn.GetPoint(0, i);
-        p1 = Regionn.GetPoint(0, i + 1);
+        p = region.GetPoint(0, i);
+        p1 = region.GetPoint(0, i + 1);
         if (p.x() <= p1.x())
         {
             x = p.x();
@@ -330,19 +284,19 @@ bool Region::intersects(Region& Regionn)
             y = p1.y();
             y1 = p.y();
         }
-        if (this->LineIntersects(x, y, x1, y1))
+        if (lineIntersects(x, y, x1, y1))
             return true;
     }
     return false;
 }
 
-bool Region::LineIntersects(const int& x, const int& y, const int& x1, const int& y1)
+bool Region::lineIntersects(const int& x, const int& y, const int& x1, const int& y1)
 {
     QVector<QPoint> a;
 
-    for (int k = 0; k < this->size(); k++)
+    for (int k = 0; k < size(); k++)
     {
-        a = this->GetContur(k);
+        a = GetContour(k);
         for (int c = 0; c < a.size() - 1; c++)
         {
             if (a[c].x() > x && a[c].x() < x1 && a[c + 1].x() > x && a[c + 1].x() < x1)
@@ -368,16 +322,16 @@ bool Region::LineIntersects(const int& x, const int& y, const int& x1, const int
     }
     return false;
 }
-//piti stugvi   1
+
 Region::t_contour Region::intersected(Region::t_contour contour)
 {
-    QPolygon p1(this->GetContur(0));
+    QPolygon p1(GetContour(0));
     QPolygon p2(contour);
     QPolygon p3 = p1.intersected(p2);
 
-    for (int i = 1; i < this->size(); i++)
+    for (int i = 1; i < size(); i++)
     {
-        QPolygon p4 = p3.subtracted(QPolygon(this->GetContur(i)));
+        QPolygon p4 = p3.subtracted(QPolygon(GetContour(i)));
 
         if (p4.isEmpty())
             continue;
@@ -389,28 +343,28 @@ Region::t_contour Region::intersected(Region::t_contour contour)
         c2.push_back(p3[i]);
     return c2;
 }
-//stugvi dzvi
-Region::t_contour Region::intersected(Region Regionn)
+
+Region::t_contour Region::intersected(Region region)
 {
-    QPolygon p1 = this->intersected(Regionn.GetContur(0));
-    QPolygon p2 = Regionn.intersected(this->GetContur(0));
+    QPolygon p1 = intersected(region.GetContour(0));
+    QPolygon p2 = region.intersected(GetContour(0));
     QPolygon p3 = p1.intersected(p2);
     t_contour c;
     for (int i = 0; i < p3.size(); i++)
         c.push_back(p3[i]);
     return c;
 }
-//stugvi dzvi
-int Region::intersects_surface(Region Regionn)
+
+int Region::intersects_surface(Region region)
 {
-    Region r(this->intersected(Regionn));
+    Region r(intersected(region));
     return r.surface();
 }
-//piti stugvi   1
+
 int Region::intersects_surface(Region::t_contour contour)
 {
     int sum = 0;
-    Region c3(this->intersected(contour));
+    Region c3(intersected(contour));
     sum = c3.surface();
     return sum;
 }
@@ -451,13 +405,12 @@ qreal Region::getPainterPathArea(QPainterPath const& painterPath)
     return (area + 1) / qreal(2);
 }
 
-//stuguma te trvat@ ortogonala te che
-bool Region::parsContur(t_contour const& currContour)
+bool Region::parseContour(t_contour const& currContour)
 {
-    bool t = true;
-    if (selfintersects(currContour))
+    bool bRes = true;
+    if (selfIntersects(currContour))
         return false;
-    if (!parsRegion(currContour))
+    if (!parseRegion(currContour))
         return false;
     for (int i = 0; i < currContour.size() - 1; i++)
         if (currContour[i].x() == currContour[i + 1].x() ||
@@ -465,33 +418,34 @@ bool Region::parsContur(t_contour const& currContour)
             continue;
         else
         {
-            false;
+            bRes = false;
             break;
         };
-    if (!currContour.empty() && currContour.last().y() != currContour.first().y() && t)
+    if (!currContour.empty() && currContour.last().y() != currContour.first().y() && bRes)
         return false;
     return true;
 }
-//stuguma xoroch@ patkanuma poligonin
-bool Region::parsRegion(t_contour const& currContour)
+
+bool Region::parseRegion(t_contour const& currContour)
 {
     if (GetRegion().size() > 0)
+    {
         for (int i = 0; i < currContour.size(); i++)
-            if (ketpatk(currContour[i].x(), currContour[i].y()))
+            if (contains({ currContour[i].x(), currContour[i].y() }))
                 continue;
             else
                 return false;
-    else
-        return true;
+    }
+    return true;
 }
 
-bool Region::ParsRegionn(QVector<Region> const& vecRegions, Region::t_contour const& currContour)
+bool Region::ParseRegions(QVector<Region> const& vecRegions, Region::t_contour const& currContour)
 {
     if (vecRegions.size() > 1)
     {
         for (int i = 0; i < vecRegions.size(); i++)
         {
-            if (vecRegions[i].GetContur(0).size() != currContour.size())
+            if (vecRegions[i].GetContour(0).size() != currContour.size())
                 return false;
 
             for (int j = 0; j < currContour.size(); j++)
@@ -501,14 +455,14 @@ bool Region::ParsRegionn(QVector<Region> const& vecRegions, Region::t_contour co
             return true;
         }
         return true;
-    } //ete nuynic eli ka;
+    }
 
     return false;
 }
 
-bool Region::selfintersects(Region::t_contour currContur)
+bool Region::selfIntersects(Region::t_contour currContour)
 {
-    Region::t_contour v = currContur;
+    Region::t_contour v = currContour;
     for (int i = 0; i < v.size() - 4; i++)
     {
         if (v[i].x() < v[i + 3].x() && v[i].x() < v[i + 4].x() && v[i + 1].x() > v[i + 3].x() &&

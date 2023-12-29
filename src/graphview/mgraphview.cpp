@@ -23,7 +23,6 @@ MGraphView::~MGraphView()
     delete scene;
 }
 
-//обработка событий клавиш
 void MGraphView::keyPressEvent(QKeyEvent* event)
 {
     if (scene->selectedItems().isEmpty())
@@ -54,13 +53,11 @@ void MGraphView::keyPressEvent(QKeyEvent* event)
     QGraphicsView::keyPressEvent(event);
 }
 
-//обработка колеса мыши
 void MGraphView::wheelEvent(QWheelEvent* event)
 {
     scaleView(pow((double)2, event->delta() / 240.0));
 }
 
-//масштабирование
 void MGraphView::scaleView(qreal scaleFactor)
 {
     qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
@@ -70,7 +67,6 @@ void MGraphView::scaleView(qreal scaleFactor)
     scale(scaleFactor, scaleFactor);
 }
 
-//перетаскивание файла в виджет
 void MGraphView::dragEnterEvent(QDragEnterEvent* event)
 {
     if (event->mimeData()->hasText())
@@ -79,7 +75,6 @@ void MGraphView::dragEnterEvent(QDragEnterEvent* event)
         event->ignore();
 }
 
-//открытие графа при перетаскивании
 void MGraphView::dropEvent(QDropEvent* event)
 {
     qDebug() << "oop!\n";
