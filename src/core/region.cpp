@@ -249,11 +249,8 @@ bool Region::contains(QPoint point)
     for (int i = 0; i < m_vecContours.size(); i++)
         for (int j = 0; j < m_vecContours[i].size(); j++)
             if (x < m_vecContours[i][j].x() && y < m_vecContours[i][j].y())
-                sum++;
-    if (sum % 2 == 0)
-        return false;
-    else
-        true;
+                ++sum;
+    return sum % 2 != 0;
 }
 
 bool Region::intersects(Region& region)
